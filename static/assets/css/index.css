@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One|Open+Sans+Condensed:300');
+body{
+    background-color: #a6fbff;
+}
+
+.break{
+    height: 40px;
+}
+
+.category{
+    width: 500px;
+    height: 40px;
+    background-color: white;
+    border: 4px solid black;
+    font-size: 36px;
+    vertical-align: middle;
+    font-family: 'Fjalla One', sans-serif;
+    padding: 5px;
+}
+
+.center {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.board table{
+}
+
+.board tr{
+
+}
+
+.board td{
+    font-size: 50px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    border: 6px solid black;
+    width: 50px;
+    height: 75px;
+}
+
+
+.hidden {
+    visibility: hidden;
+}
+
+.inactive{
+    background-color: #047a00;
+    background-image: url('../images/WheelOfFortuneLogo.png');
+    background-size: 35px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.active{
+    background-image: none;
+    background-color: white;
+}
+
+.next {
+    width: 100px;
+    height: 40px;
+    background-color: white;
+    border: 4px solid black;
+    font-size: 36px;
+    vertical-align: middle;
+    font-family: 'Fjalla One', sans-serif;
+    padding: 5px;
+}

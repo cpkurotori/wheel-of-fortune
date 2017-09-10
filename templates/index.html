@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+  <head></head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Wheel of Fortune</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/index.css') }}">
+  <body>
+    <div class="board" name="board">
+      <table id="game-table" class="center"></table>
+    </div>
+    <div class="break"></div>
+    <div class="category center" name="category">
+      <span id="category">{{ category }}</span>
+    </div>
+    <div class="break"></div>
+    <div id="next" class="next center" style="display: none;" name="next" href="next">
+      <span>NEXT</span>
+    </div>
+    <script src="{{ url_for('static', filename='assets/js/index.js') }}"></script>
+  </body>
+</html>
