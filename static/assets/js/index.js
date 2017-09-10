@@ -1,5 +1,6 @@
 /* global $*/
-var count = 0
+var count = 0;
+var snd = new Audio("static/assets/sounds/ding.mp3");
 
 function makeActive(row, cell){
     cell = $("#"+row+"-"+cell);
@@ -9,8 +10,9 @@ function makeActive(row, cell){
 
 function makeQueued(row,cell){
     cell = $("#"+row+"-"+cell);
+    snd.play();
     cell.attr("style","background-color: blue;");
-    cell.attr("onclick", "getLetter(this); count++");
+    cell.attr("onclick", "getLetter(this); count++; checkWin()");
 }
 
 var punctuation = ["'",",","!",".","?",";",":"," "]
@@ -52,23 +54,39 @@ function searchLetter(letter){
                         };
                     };
                 };
-                slowReveal(duples);
+                if (duples.length > 0){
+                    slowReveal(duples);
+                }
             }
         });
     };
 }
 
+function solvePuzzle(){
+    $('#solve').attr('style','display:none;')
+    $('#next').attr('style','display:block')
+    fireworks();
+    for (var i = 0; i < 4; i++){
+        for (var j = 0; j < 14; j++){
+            getLetter(document.getElementById(i+'-'+j));
+        }
+    }
+    
+    
+}
+
+
 function getLetter(cell){
-    console.log(cell.attributes['row'].value+'-'+cell.attributes['cell'].value)
-    console.log("getting letter...")
-    cell.style.backgroundColor = "white"; 
-    cell.removeAttribute("onclick");
     $.ajax({
         url:'getLetter',
         method:'GET',
         data:{row:cell.attributes['row'].value, cell:cell.attributes['cell'].value},
         success: function(result){
-            cell.innerHTML = result;
+            if (result != " "){
+                cell.innerHTML = result;
+                cell.style.backgroundColor = "white"; 
+                cell.removeAttribute("onclick");
+            }
         }
     });
 }
@@ -81,7 +99,7 @@ function slowReveal(duples){
         return
     }
     else{
-        return setTimeout(slowReveal,800, duples = duples)
+        return setTimeout(slowReveal,1200, duples = duples)
     }
 }
 
@@ -91,8 +109,10 @@ function checkWin(){
         method:'GET',
         success: function(total){
             if (count == Number(total)){
+                fireworks();
+                document.getElementById('solve').style.display = "none";
                 document.getElementById('next').style.display = "block";
-                clearInterval()
+
             }
         }
     });    
@@ -116,14 +136,13 @@ $(document).ready(function(){
         method:'GET',
         success: loadPuzzle
     });
-    var ready = false;
-    $(document).keypress(function(event) {
-        if (ready){
-            searchLetter(event.key);
-        }
-    });
-    setInterval(checkWin,1500);
+
 });
 
 
-
+var ready = false;
+$(document).keypress(function(event) {
+    if (ready){
+        searchLetter(event.key);
+    }
+});

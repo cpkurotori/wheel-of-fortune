@@ -4,7 +4,7 @@ import os, sys, random, json
 from phrase_list import puzzles
 
 app = Flask(__name__)
-app.config['PUZZLE_NO'] =0
+app.config['PUZZLE_NO'] = 0
 
 
 @app.route('/')
@@ -25,13 +25,17 @@ def loadPuzzle():
 def getCount():
     return str(puzzles[app.config['PUZZLE_NO']]['count'])
 
+@app.route('/win')
+def win():
+    return render_template('engaged.html')
+
 @app.route('/next')
 def next():
-    app.config['PUZZLE_NO'] += 1
-    if app.config['PUZZLE_NO'] > len(puzzles):
-        return redirect(url_for('win'))
-    else:
+    if app.config['PUZZLE_NO'] < len(puzzles)-1:
+        app.config['PUZZLE_NO'] += 1
         return redirect(url_for('index'))
+    else:
+        return redirect(url_for('win'))
         
 @app.route('/reset')
 def reset():

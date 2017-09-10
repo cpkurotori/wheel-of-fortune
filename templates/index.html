@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
   <head></head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ url_for('static',filename='assets/js/jquery-3.2.1.min.js') }}"></script>
     <title>Wheel of Fortune</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/index.css') }}">
   <body>
@@ -13,9 +13,14 @@
       <span id="category">{{ category }}</span>
     </div>
     <div class="break"></div>
-    <a href="#" onclick="ready = true; this.style.display='none'";>
-    <div id="ready" class="ready center" name="ready">
+    <a href="#" id="ready" onclick="ready = true; this.style.display='none'; $('#solve').attr('style','display:block')">
+    <div class="ready center" name="ready">
       <span>READY</span>
+    </div>
+    </a>
+    <a href="#" id="solve" style="display: none" onclick="solvePuzzle(); this.style.display='none';">
+    <div class="solve center" name="solve">
+      <span>SOLVE</span>
     </div>
     </a>
     <a href="next" id="next" style="display:none;">
