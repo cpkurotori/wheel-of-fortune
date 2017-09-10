@@ -37,6 +37,10 @@ def next():
     else:
         return redirect(url_for('win'))
         
+@app.route('/changePuzzle')
+def changePuzzle():
+    app.config['PUZZLE_NO'] = len(puzzles)-2
+        
 @app.route('/reset')
 def reset():
     app.config['PUZZLE_NO'] = 0

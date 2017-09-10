@@ -1,6 +1,8 @@
 /* global $*/
 var count = 0;
-var snd = new Audio("static/assets/sounds/ding.mp3");
+var win = new Audio("static/assets/sounds/ding.mp3");
+var fail = new Audio("static/assets/sounds/fail.mp3");
+var theme = new Audio('static/assets/sounds/theme.mp3');
 
 function makeActive(row, cell){
     cell = $("#"+row+"-"+cell);
@@ -10,7 +12,7 @@ function makeActive(row, cell){
 
 function makeQueued(row,cell){
     cell = $("#"+row+"-"+cell);
-    snd.play();
+    win.play();
     cell.attr("style","background-color: blue;");
     cell.attr("onclick", "getLetter(this); count++; checkWin()");
 }
@@ -54,18 +56,21 @@ function searchLetter(letter){
                         };
                     };
                 };
-                if (duples.length > 0){
+                if (duples.length == 0){
+                    fail.play();
+                }else{
                     slowReveal(duples);
                 }
             }
         });
+    }else{
+        fail.play();
     };
 }
 
 function solvePuzzle(){
     $('#solve').attr('style','display:none;')
     $('#next').attr('style','display:block')
-    fireworks();
     for (var i = 0; i < 4; i++){
         for (var j = 0; j < 14; j++){
             getLetter(document.getElementById(i+'-'+j));
@@ -109,7 +114,6 @@ function checkWin(){
         method:'GET',
         success: function(total){
             if (count == Number(total)){
-                fireworks();
                 document.getElementById('solve').style.display = "none";
                 document.getElementById('next').style.display = "block";
 
@@ -144,5 +148,18 @@ var ready = false;
 $(document).keypress(function(event) {
     if (ready){
         searchLetter(event.key);
+    }else{
+        if (event.key == "5"){
+            $.ajax({
+                url:'changePuzzle',
+                method:'GET',
+                success: function(){}
+            });
+        }
+        else if (event.key.toUpperCase() == "P"){
+            theme.play();
+        }else if (event.key.toUpperCase() == "M"){
+            theme.pause();
+        };
     }
 });
