@@ -32,5 +32,10 @@ def next():
         return redirect(url_for('win'))
     else:
         return redirect(url_for('index'))
+        
+@app.route('/reset')
+def reset():
+    app.config['PUZZLE_NO'] = 0
+    return redirect(url_for('index'))
 
-app.run(host='0.0.0.0',port=5000)
+app.run(host=os.getenv('IP', '0.0.0.0'),port=int(os.getenv('PORT', '8080')))

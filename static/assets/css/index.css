@@ -56,7 +56,9 @@ body{
     background-color: white;
 }
 
-.next {
+.next, .ready {
+    color: black;
+    text-decoration: none;
     width: 100px;
     height: 40px;
     background-color: white;
@@ -65,4 +67,12 @@ body{
     vertical-align: middle;
     font-family: 'Fjalla One', sans-serif;
     padding: 5px;
+}
+
+.next:hover, .ready:hover{
+    background-color: lightgrey;
+}
+
+.ready span, .next span{
+    text-decoration: none;
 }

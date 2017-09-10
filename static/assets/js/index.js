@@ -1,4 +1,5 @@
-count = 0
+/* global $*/
+var count = 0
 
 function makeActive(row, cell){
     cell = $("#"+row+"-"+cell);
@@ -12,14 +13,14 @@ function makeQueued(row,cell){
     cell.attr("onclick", "getLetter(this); count++");
 }
 
-punctuation = ["'",",","!",".","?",";",":"," "]
+var punctuation = ["'",",","!",".","?",";",":"," "]
 
 function loadPuzzle(puzzle){
     puzzle = JSON.parse(puzzle);
     for (var row = 0; row < 4; row++){
         for (var cell = 0; cell < 14; cell++){
-            spot = $('#'+row+'-'+cell);
-            letter = puzzle['word'][row][cell]
+            var spot = $('#'+row+'-'+cell);
+            var letter = puzzle['word'][row][cell]
             if (letter != ' '){
                 makeActive(row,cell);
                 if ($.inArray(letter,punctuation) >= 0){
@@ -32,18 +33,18 @@ function loadPuzzle(puzzle){
     }
 }
 
-guessed = []
+var guessed = []
 
 function searchLetter(letter){
-    already = $.inArray(letter,guessed) >= 0;
+    var already = $.inArray(letter,guessed) >= 0;
     if (letter != " " && !already){
         guessed.push(letter);
         $.ajax({
             url:'loadPuzzle',
             method:'GET',
             success: function(data){
-                puzzle = JSON.parse(data);
-                duples = []
+                var puzzle = JSON.parse(data);
+                var duples = []
                 for (var row = 0; row < 4; row++){
                     for (var cell = 0; cell < 14; cell++){
                         if (puzzle['word'][row][cell].toUpperCase() == letter.toUpperCase()){
@@ -74,7 +75,7 @@ function getLetter(cell){
 
 
 function slowReveal(duples){
-    row_col = duples.pop()
+    var row_col = duples.pop()
     makeQueued(row_col[0],row_col[1])
     if (duples.length == 0){
         return
@@ -97,6 +98,7 @@ function checkWin(){
     });    
 }
 
+
 $(document).ready(function(){
     for (var row = 0; row < 4; row++){
         $('#game-table').append('<tr id="r'+row+'"></tr>');
@@ -114,7 +116,7 @@ $(document).ready(function(){
         method:'GET',
         success: loadPuzzle
     });
-    ready = false;
+    var ready = false;
     $(document).keypress(function(event) {
         if (ready){
             searchLetter(event.key);

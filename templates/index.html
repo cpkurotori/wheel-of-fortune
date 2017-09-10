@@ -13,9 +13,16 @@
       <span id="category">{{ category }}</span>
     </div>
     <div class="break"></div>
-    <div id="next" class="next center" style="display: none;" name="next" href="next">
+    <a href="#" onclick="ready = true; this.style.display='none'";>
+    <div id="ready" class="ready center" name="ready">
+      <span>READY</span>
+    </div>
+    </a>
+    <a href="next" id="next" style="display:none;">
+    <div class="next center" name="next">
       <span>NEXT</span>
     </div>
+    </a>
     <script src="{{ url_for('static', filename='assets/js/index.js') }}"></script>
   </body>
 </html>
